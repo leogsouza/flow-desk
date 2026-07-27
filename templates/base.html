@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FlowDesk{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Minimalist Dark Palette using Zinc & Slate
+                        darkBg: '#09090b',      /* Zinc 950 */
+                        darkCard: '#121214',    /* Zinc 900 (slightly adjusted) */
+                        darkBorder: '#27272a',  /* Zinc 800 */
+                        textPrimary: '#f4f4f5', /* Zinc 100 */
+                        textMuted: '#94a3b8',   /* Slate 400 */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar to match the dark theme aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-textPrimary flex flex-col min-h-screen font-sans antialiased selection:bg-zinc-800 selection:text-white">
+
+    <nav class="border-b border-darkBorder/60 bg-darkBg/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="/" class="text-md font-semibold tracking-wider hover:text-slate-300 transition-colors flex items-center gap-2">
+                        <span class="h-4 w-4 rounded-sm bg-white"></span>
+                        FLOW<span class="text-textMuted font-light">DESK</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-xs font-medium uppercase tracking-wider text-textPrimary hover:text-slate-300 transition-colors">Dashboard</a>
+                    <a href="#" class="text-xs font-medium uppercase tracking-wider text-textMuted hover:text-white transition-colors">Tickets</a>
+                    <a href="#" class="text-xs font-medium uppercase tracking-wider text-textMuted hover:text-white transition-colors">Settings</a>
+                </div>
+
+                <div class="hidden md:flex items-center">
+                    <a href="#" class="text-xs font-medium px-3 py-1.5 border border-darkBorder hover:border-zinc-700 rounded bg-zinc-900 hover:bg-zinc-800 transition-all duration-150">
+                        New Ticket
+                    </a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="p-2 rounded text-textMuted hover:text-white hover:bg-zinc-900 focus:outline-none" aria-label="Toggle Menu">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden border-b border-darkBorder bg-darkBg/95 backdrop-blur-lg px-4 pt-2 pb-4 space-y-2">
+            <a href="#" class="block px-3 py-2 rounded text-sm font-medium text-textPrimary bg-zinc-900">Dashboard</a>
+            <a href="#" class="block px-3 py-2 rounded text-sm font-medium text-textMuted hover:text-white hover:bg-zinc-900 transition-colors">Tickets</a>
+            <a href="#" class="block px-3 py-2 rounded text-sm font-medium text-textMuted hover:text-white hover:bg-zinc-900 transition-colors">Settings</a>
+            <div class="pt-4 border-t border-darkBorder/60">
+                <a href="#" class="block w-full text-center text-xs font-medium px-4 py-2 border border-darkBorder rounded bg-zinc-900 hover:bg-zinc-800 transition-colors">
+                    New Ticket
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="border-t border-darkBorder/40 bg-darkBg/30">
+        <div class="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="font-semibold text-textPrimary">FLOWDESK</span>
+                    <span class="text-zinc-600">|</span>
+                    <span class="text-textMuted">© 2026</span>
+                </div>
+                <div class="flex space-x-6 text-textMuted">
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        menuBtn.addEventListener('click', () => {
+            const isExpanded = mobileMenu.classList.toggle('hidden');
+            
+            // Toggle hamburger icon to an "X" shape when open
+            if (!isExpanded) {
+                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            } else {
+                menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            }
+        });
+    </script>
+</body>
+</html>
